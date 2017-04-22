@@ -10,13 +10,15 @@ class go_tool
   /***
    * pre_dump
    */
-  public static function pre_dump( $array ){
+  public static function pre_dump( $array, $exit = false ){
     if( is_array($array) || is_object($array)){
       echo '<pre>';
       var_dump($array);
       echo '</pre>';
+      if($exit) exit;
     }
   }
+  /***/
 
   /***
    * Clean Html
@@ -50,8 +52,8 @@ class go_tool
     // rimuovi altri tag html
     $clean_it = strip_tags($clean_it);
     return trim($clean_it);
-
   }
+  /***/
 
   /***
    * Get Domain
@@ -67,6 +69,7 @@ class go_tool
     }
     return false;
   }
+  /***/
 
   /***
    * Dir List
@@ -77,8 +80,9 @@ class go_tool
         if(is_dir($dir.'/'.$f)) $l[]=$f;
       return $l;
   }
+  /***/
 
-  /*
+  /***
    * File List
    */
   public static function file_list($dir,$ext){
@@ -93,8 +97,9 @@ class go_tool
       }
       return $l;
   }
+  /***/
 
-  /*
+  /***
    * Remove Special chars
    */
   public static function sanitize($string) {
@@ -120,6 +125,7 @@ class go_tool
        );
        return preg_replace(array_keys($utf8), array_values($utf8), $string);
   }
+  /***/
 
   /*
    * Create Slug url
@@ -132,5 +138,28 @@ class go_tool
     $string = preg_replace('~-+~', '-', $string);
     return str_ireplace(array(' ',',','&'), '-', $string );
   }
+  /***/
+
+  /***
+   * Password Random
+   */
+  public static function password_rand( $length = 7 ){
+      $pwd = array();
+      $letter = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+      $letter_lenght = strlen($letter) - 1;
+      if( $length > 0 ){
+        $n = '';
+        for ($i = 0; $i < (int)$length; $i++) {
+             $n = rand(0, $letter_lenght);
+             $pwd[] = $letter[$n];
+        }
+        return implode($pwd);
+      }
+   }
+  /***/
+
+  /***
+   * progress....
+   */
 }
 ?>
